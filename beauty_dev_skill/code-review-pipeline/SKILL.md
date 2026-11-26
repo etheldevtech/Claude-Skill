@@ -1,6 +1,6 @@
 ---
 name: code-review-pipeline
-description: Run a 7-step code review (bugs, senior review, edge cases, backward compatibility, error handling, simplification, review comment) on a diff or code block. Use when asked to review code with the pipeline.
+description: Run a 10-step code review (bugs, senior review, edge cases, backward compatibility, error handling, simplification, security, tests, scale, review comment) on a diff or code block. Use when asked to review code with the pipeline.
 ---
 
 # Code Review Pipeline
@@ -29,5 +29,14 @@ Audit the error handling in this code. Find: swallowed exceptions (catch blocks 
 ### 6. Suggest a Simpler Way to Achieve the Same Result
 Look at this code and suggest a simpler implementation that achieves the same result. Prioritize: fewer lines, less state, built-in language/library features over custom code. Show the simplified version side by side with the original. Only suggest changes that are genuinely simpler — don't trade one kind of complexity for another. If the code is already optimal, say so.
 
-### 7. Write the Review Comment I Should Leave on This Code
+### 7. What Security Holes Does This Change Open?
+Audit this diff for security issues only. Check for: unsanitized input in queries, shells, or HTML; missing auth or permission checks on new endpoints and mutations; secrets, tokens, or PII in logs or responses; trusting client-supplied IDs or roles; insecure defaults. For each issue, show the exact line, who can exploit it, and a fix. If you find nothing, say so explicitly.
+
+### 8. Do the Tests Actually Prove This?
+Review the tests in this diff. Check for: new behavior with no test, a bugfix whose test would still pass if the fix were reverted, assertions that check nothing, and failure paths that are never exercised. For each gap, name the missing case and the assertion it needs. If the tests prove the change, say so.
+
+### 9. What Breaks When This Runs at Scale?
+Look for work that gets expensive with real traffic or data size. Check for: N+1 queries, unbounded loops or in-memory collections, missing limits or indexes, and retries with no cap or backoff. For each, say the current cost and a cheaper alternative. Ignore micro-optimizations. If nothing matters at realistic scale, say so.
+
+### 10. Write the Review Comment I Should Leave on This Code
 (Only if issues remain) Write a professional, specific, actionable GitHub review comment.
