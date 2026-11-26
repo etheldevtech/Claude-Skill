@@ -15,7 +15,7 @@ If no target is given, review the current diff (`git diff HEAD`).
 Review this diff for logic errors, null dereferences, race conditions, and off-by-one errors only. Ignore formatting, naming conventions, and style. For each bug found, show me the exact line, explain why it's a bug, and suggest a fix. If you find nothing, say so explicitly.
 
 ### 2. Review This Diff as a Senior Engineer on the Team
-You are a senior engineer who has worked on this codebase for 2 years. You care about maintainability, pragmatic architecture, and not over-engineering. Review this diff. Comment on architectural trade-offs, whether abstractions are at the right level, and anything that will hurt the team in 6 months. Be direct, not diplomatic.
+You are a senior engineer who has worked on this codebase for 2 years. You care about maintainability, pragmatic architecture, and not over-engineering. Review this diff. Comment on architectural trade-offs, whether abstractions are at the right level, and anything that will hurt the team in 6 months. Be direct, not diplomatic. A function used once, or logic copied from code that already exists, is over-engineering. Do not praise it. Step 6 owns the fix.
 
 ### 3. What Edge Cases Does This Code Miss?
 Given this code, list every edge case it does not handle. Think about: empty inputs, nil/null values, boundary values (0, -1, MaxInt), concurrent access, network timeouts, malformed data, and unexpected types. For each edge case, show what would currently happen and what should happen instead.
@@ -28,6 +28,8 @@ Audit the error handling in this code. Find: swallowed exceptions (catch blocks 
 
 ### 6. Suggest a Simpler Way to Achieve the Same Result
 Look at this code and suggest a simpler implementation that achieves the same result. Prioritize: fewer lines, less state, built-in language/library features over custom code. Show the simplified version side by side with the original. Only suggest changes that are genuinely simpler — don't trade one kind of complexity for another. If the code is already optimal, say so.
+
+These are FIX NEEDED, not style: a function used once that only holds a few straight lines; a wrapper that only calls another function; a check, query, or transform copied instead of calling or extending existing code; code this change leaves unused. Show that function inlined, or the shared call in its place. A new function is fine when more than one caller uses it, or the file already splits that work the same way.
 
 ### 7. What Security Holes Does This Change Open?
 Audit this diff for security issues only. Check for: unsanitized input in queries, shells, or HTML; missing auth or permission checks on new endpoints and mutations; secrets, tokens, or PII in logs or responses; trusting client-supplied IDs or roles; insecure defaults. For each issue, show the exact line, who can exploit it, and a fix. If you find nothing, say so explicitly.

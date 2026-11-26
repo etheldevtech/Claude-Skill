@@ -11,7 +11,7 @@ Write the change. Match the surrounding code. Do not write tests, do not update 
 No logic errors, null dereferences, race conditions, or off-by-one errors. Handle empty input, nil/null, 0, -1, MaxInt, concurrent access, network timeouts, malformed data, and the wrong type.
 
 ### 2. Simple Enough for 6 Months
-Fewer lines, less state, built-in language or library features over custom code. Keep the abstraction at the level the file already uses. Do not over-engineer. Change only what the task needs.
+Fewer lines, less state, built-in language or library features over custom code. Keep the abstraction at the level the file already uses. Do not over-engineer. Change only what the task needs. Do not add a function that is used once and only moves a few straight lines out of the caller. Leave that code inline. A wrapper that only calls another function counts. Do not copy a check, query, or transform that already exists. Call or extend that code. Remove code this change leaves unused. A new function is allowed when more than one caller uses it, or the file already splits that work the same way.
 
 ### 3. Nothing Fails Silently
 Do not swallow exceptions. Check returned errors. Every operation that can fail has an error path. Do not log an error and continue. Config matches across services. After an outage, the path recovers.
