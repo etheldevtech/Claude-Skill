@@ -6,4 +6,5 @@ Run
 /programming
 /exception-use-case
 /explain-code
+/full-code
 ```
