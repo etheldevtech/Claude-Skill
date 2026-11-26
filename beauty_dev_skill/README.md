@@ -5,4 +5,5 @@ Run
 /code-review-pipeline
 /programming
 /exception-use-case
+/explain-code
 ```
