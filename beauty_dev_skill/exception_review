@@ -1,0 +1,4 @@
+Exception Review
+```
+Act as a hostile reviewer. Check: config mismatches between services, behavior at 20× scale, recovery after outages, forgeable signatures, edited migrations, undeleted data, wrong-type inputs. Prove each with a test.
+```
